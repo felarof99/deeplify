@@ -1069,9 +1069,8 @@ def run_validate():
 
 	predicted_label = idx2label[predicted.item()]
 
-	for i in range(100):
-	    print("Validate success!")
-	    print("Output class", predicted_label)
+	result = {"pred": predicted_label}
+	db.child("result").push(result)
 
+	print("Result published", result)
 	return
-run_validate()
