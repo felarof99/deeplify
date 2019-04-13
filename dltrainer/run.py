@@ -26,4 +26,7 @@ net = models.resnet50(pretrained=True)
 net.cuda() if USE_CUDA else None
 net.eval()
 
-output = net(input)
+
+inp = # TODO: read input image file from GCR
+output = net()
+# TODO: write output to GCR

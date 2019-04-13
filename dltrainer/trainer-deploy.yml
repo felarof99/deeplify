@@ -16,20 +16,7 @@ spec:
         - containerPort: 4545
         command: ["python"]
         args:
-        - "train.py"
-        - "--expid"
-        - "v100-zmq"
-        - "--model"
-        - "resnet50"
-        - "--iter"
-        - "500"
-        - "--devices"
-        - "1" # TODO Set the number of GPUs required by your Job
-        - "--batch-size"
-        - "128"
-        - "--profile-freq"
-        - "0.5"
-        - "--use-remote"
+        - "run.py"
         resources:          
           limits:
             nvidia.com/gpu: 1 # TODO Set this number to same as the number of GPUs required by your Job
