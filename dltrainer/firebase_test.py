@@ -16,10 +16,6 @@ db = firebase.database()
 storage = firebase.storage()
 
 
-import os
-os.listdir('.')
-
-
 storage.child("validate.py").put("./validate_original.py")
 
 
