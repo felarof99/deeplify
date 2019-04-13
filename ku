@@ -9,11 +9,11 @@ cmd_init() { # initialize the cluster
     # set -e
     gcloud config set project $project
     gcloud config set compute/zone $zone
-    gcloud config set container/new_scopes_behavior true
-    # gcloud config set container/use_v1_api false
+    gcloud config set container/new_scopes_behavior false
+    # gcloud config set container/use_v1_api true
     gcloud config set container/cluster $cluster
     gcloud beta container clusters create $cluster \
-        --zone $zone --cluster-version 1.9 \
+        --zone $zone \
         --machine-type ${cpu_machine:-n1-standard-8} \
         --enable-autorepair \
         --scopes $scopes \
