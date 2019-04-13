@@ -19,7 +19,9 @@ my_stream = db.child("result").stream(stream_handler, stream_id="new_posts")
 def run_demo():
     import pyrebase
     import time
+    from subprocess import call
 
+    # call('kubectl delete jobs/job2', shell=True)
     config = {
       "apiKey": "AIzaSyB38Yt-RwENhJdvlkeOxej8LFh80FZPibI",
       "authDomain": "ychack-f2bfb.firebaseapp.com",
@@ -32,6 +34,6 @@ def run_demo():
     storage = firebase.storage()
     
     storage.child("img.png").put(img_file)
-    from subprocess import call
+
     call('kubectl apply -f ../dltrainer/trainer-deploy.yml', shell=True)
 

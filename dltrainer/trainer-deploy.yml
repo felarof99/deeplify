@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: job2
 spec:
-  # ttlSecondsAfterFinished: 10
+  # ttlSecondsAfterFinished: 0
   template:
     metadata:
       name: imagenet-trainer
