@@ -31,42 +31,6 @@ test_transform = transforms.Compose([
 USE_CUDA = torch.cuda.is_available()
 
 
-net = models.resnet50(pretrained=True)
-net.cuda() if USE_CUDA else None
-net.eval()
-
-
-# Read image
-img = Image.open("img.png")
-
-
-img2arr = np.array(img)
-
-
-# Convert to a PIL image and apply Transformation (TorchVision transforms requires the input to be PIL image)
-img = Image.fromarray(np.uint8(img2arr))
-img = transform_test(img)
-
-inp = torch.Tensor()
-inp = img
-inp = inp.unsqueeze(0)
-
-
-output = net(inp)
-
-
-output.shape
-
-
-values, indices = torch.max(output, 0)
-
-
-_, predicted = torch.max(output.data, 1)
-
-
-idx2label[predicted.item()]
-
-
 idx2label = {0: 'tench, Tinca tinca',
  1: 'goldfish, Carassius auratus',
  2: 'great white shark, white shark, man-eater, man-eating shark, Carcharodon carcharias',
@@ -1070,9 +1034,36 @@ idx2label = {0: 'tench, Tinca tinca',
 
 
 def run_validate():
-    for i in range(10000):
+    net = models.resnet50(pretrained=True)
+    net.cuda() if USE_CUDA else None
+    net.eval()
+    
+    # Read image
+    img = Image.open("img.png")
+    img2arr = np.array(img)
+    
+    # Convert to a PIL image and apply Transformation (TorchVision transforms requires the input to be PIL image)
+    img = Image.fromarray(np.uint8(img2arr))
+    img = test_transform(img)
+
+    inp = torch.Tensor()
+    inp = img
+    inp = inp.unsqueeze(0)
+    
+    output = net(inp)
+    
+    values, indices = torch.max(output, 0)
+    
+    _, predicted = torch.max(output.data, 1)
+    
+    predicted_label = idx2label[predicted.item()]
+    
+    for i in range(100):
         print("Validate success!")
-        print("Output class", output)
+        print("Output class", predicted_label)
 
     return
+
+
+run_validate()
 
