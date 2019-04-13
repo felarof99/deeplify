@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod1
+spec:
+  containers:
+  - name: imagenet-trainer
+    image: gcr.io/sonic-column-220616/dloncloud:v99991 # TODO Put location of your image on cloud repository
+    ports:
+    - containerPort: 4545
+    command: ["/bin/bash"]
+    # command: ["python"]
+    # args:
+    # - "run.py"
+    resources:          
+      limits:
+        nvidia.com/gpu: 1 # TODO Set this number to same as the number of GPUs required by your Job
+  nodeSelector:
+    cloud.google.com/gke-accelerator: nvidia-tesla-k80
+  restartPolicy: OnFailure
+
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: shell-demo
+# spec:
+#   volumes:
+#   - name: shared-data
+#     emptyDir: {}
+#   containers:
+#   - name: nginx
+#     image: nginx
+#     volumeMounts:
+#     - name: shared-data
+#       mountPath: /usr/share/nginx/html
+
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: shell-demo
+# spec:
+#   containers:
+#   - name: imagenet-trainer
+#     image: gcr.io/sonic-column-220616/dloncloud:v99991
