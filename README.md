@@ -1,13 +1,10 @@
 
-# SwishDL
+# Deeplify
 
 ## Description
 This repo contains scripts and instructions to create your own Cloud Layer for efficiently running and scaling your DL training jobs.
 
 Recommended setup:
-1. Use sharded versions of CIFAR10, and ImageNet that are already available at below locations.   
-    * _CIFAR10_: http://storage.googleapis.com/lpr-demo     
-    * _ImageNet_: http://storage.googleapis.com/lpr-imagenet   
 1. Create kubernetes cluster to meet your needs - GPU type (K80, P100, V100), Number of GPUs per node (1, 2, 4, 8).
 1. Create a docker image of your trainer.
 1. Use deploy script and launch your trainer (explained later).
@@ -90,9 +87,3 @@ spec:
 7. Deploy your job   
 `kubectl create -f trainer-job.yml`
 
-## Profiler Dashboard
-The base docker image also comes with a built-in profiler, which tracks GPU, CPU and Network Utilization every 30seconds. 
-
-Below is a sample dashboard from training a network across 4 GPUs.
-
-![Sample Dashboard](https://www.evernote.com/shard/s405/sh/c42efe14-ef62-481f-b196-64c3edde8cac/7620b9242b1d6462441f42b42c257f29/res/8ce9b60f-3372-4c3b-bbf6-99fb46f5005b.jpg)
