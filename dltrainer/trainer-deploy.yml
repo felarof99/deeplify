@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: job1
+  name: job2
 spec:
   template:
     metadata:
@@ -11,13 +11,13 @@ spec:
     spec:
       containers:
       - name: imagenet-trainer
-        image: gcr.io/sonic-column-220616/dloncloud:v99991 # TODO Put location of your image on cloud repository
+        image: gcr.io/sonic-column-220616/dloncloud:v99993 # TODO Put location of your image on cloud repository
         ports:
         - containerPort: 4545
+        # command: ["/bin/sh", "-ec", "while :; do echo '.'; sleep 5 ; done"]
         command: ["python"]
-        # command: ["python"]
-        # args:
-        # - "run.py"
+        args:
+        - "run.py"
         resources:          
           limits:
             nvidia.com/gpu: 1 # TODO Set this number to same as the number of GPUs required by your Job

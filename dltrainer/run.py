@@ -12,8 +12,5 @@ db = firebase.database()
 storage = firebase.storage()
 storage.child("validate.py").download("validate.py", "validate.py")
 
-import pdb
-pdb.set_trace()
-
 import validate
 validate.run_validate()

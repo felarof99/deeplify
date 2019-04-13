@@ -96,3 +96,4 @@ COPY ./*.py ./
 # Setting cache-server as the proxy
 ENV http_proxy http://cache-layer-service:3128
 
+# ENTRYPOINT ["tail", "-f", "/dev/null"]
