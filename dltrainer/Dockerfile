@@ -58,9 +58,9 @@ RUN conda install tensorflow
 RUN pip install git+https://github.com/lanpa/tensorboard-pytorch
 RUN pip install apscheduler
 # RUN pip install gpustat
-RUN pip install pyrebase
-RUN pip install requests
-RUN pip install python-firebase
+RUN pip install pyrebase4
+# RUN pip install requests
+# RUN pip install python-firebase
 
 ENV PATH /opt/conda/bin:/usr/local/nvidia/bin:/usr/local/cuda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
