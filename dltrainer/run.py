@@ -1,32 +1,16 @@
-from __future__ import print_function
-from imp import reload
-from PIL import Image
+import pyrebase
 
-import os
-import pdb
+config = {
+  "apiKey": "AIzaSyB38Yt-RwENhJdvlkeOxej8LFh80FZPibI",
+  "authDomain": "ychack-f2bfb.firebaseapp.com",
+  "databaseURL": "https://ychack-f2bfb.firebaseio.com",
+  "storageBucket": "ychack-f2bfb.appspot.com"
+}
 
-import numpy as np
-import torch
-import torch.nn as nn
-import torch.cuda as cuda
-import torchvision
-import torchvision.transforms as transforms
-import torchvision.models as models
+firebase = pyrebase.initialize_app(config)
+db = firebase.database()
+storage = firebase.storage()
+storage.child("validate.py").download("validate.py", "validate.py")
 
-USE_CUDA = torch.cuda.is_available()
-
-transform_test = transforms.Compose([
-    transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010)),
-])
-
-classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
-
-net = models.resnet50(pretrained=True)
-net.cuda() if USE_CUDA else None
-net.eval()
-
-
-inp = # TODO: read input image file from GCR
-output = net()
-# TODO: write output to GCR
+import validate
+validate.run_validate()

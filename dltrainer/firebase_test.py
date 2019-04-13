@@ -20,7 +20,20 @@ db.child("users").push(data)
 storage = firebase.storage()
 
 
-storage.child("users").put("./Dockerfile")
+import os
+os.listdir('.')
+
+
+storage.child("validate.py").put("./validate.py")
+
+
+x = storage.child("validate.py").download("validate.py", "validate.py")
+
+
+x
+
+
+help(storage.child().download)
 
 
 apiKey: "AIzaSyB38Yt-RwENhJdvlkeOxej8LFh80FZPibI",
