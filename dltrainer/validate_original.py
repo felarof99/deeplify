@@ -1046,7 +1046,7 @@ def run_validate():
 	storage.child("img.png").download("img.png", "img.png")
 
 	net = models.resnet50(pretrained=True)
-	net.cuda() if USE_CUDA else None
+	# net.cuda() if USE_CUDA else None
 	net.eval()
 
 	# Read image
