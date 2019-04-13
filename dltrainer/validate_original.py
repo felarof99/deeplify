@@ -14,6 +14,7 @@ import torch.cuda as cuda
 import torchvision
 import torchvision.transforms as transforms
 import torchvision.models as models
+import pyrebase
 
 from PIL import Image
 
@@ -29,7 +30,6 @@ test_transform = transforms.Compose([
 
 
 USE_CUDA = torch.cuda.is_available()
-
 
 idx2label = {0: 'tench, Tinca tinca',
  1: 'goldfish, Carassius auratus',
@@ -1030,40 +1030,48 @@ idx2label = {0: 'tench, Tinca tinca',
  996: 'hen-of-the-woods, hen of the woods, Polyporus frondosus, Grifola frondosa',
  997: 'bolete',
  998: 'ear, spike, capitulum',
- 999: 'toilet tissue, toilet paper, bathroom tissue'}
-
+ 999: 'toilet tissue, toilet paper, bathroom tissue',}
 
 def run_validate():
-    net = models.resnet50(pretrained=True)
-    net.cuda() if USE_CUDA else None
-    net.eval()
-    
-    # Read image
-    img = Image.open("img.png")
-    img2arr = np.array(img)
-    
-    # Convert to a PIL image and apply Transformation (TorchVision transforms requires the input to be PIL image)
-    img = Image.fromarray(np.uint8(img2arr))
-    img = test_transform(img)
+	config = {
+	  "apiKey": "AIzaSyB38Yt-RwENhJdvlkeOxej8LFh80FZPibI",
+	  "authDomain": "ychack-f2bfb.firebaseapp.com",
+	  "databaseURL": "https://ychack-f2bfb.firebaseio.com",
+	  "storageBucket": "ychack-f2bfb.appspot.com"
+	}
 
-    inp = torch.Tensor()
-    inp = img
-    inp = inp.unsqueeze(0)
-    
-    output = net(inp)
-    
-    values, indices = torch.max(output, 0)
-    
-    _, predicted = torch.max(output.data, 1)
-    
-    predicted_label = idx2label[predicted.item()]
-    
-    for i in range(100):
-        print("Validate success!")
-        print("Output class", predicted_label)
+	firebase = pyrebase.initialize_app(config)
+	db = firebase.database()
+	storage = firebase.storage()
+	storage.child("img.png").download("img.png", "img.png")
 
-    return
+	net = models.resnet50(pretrained=True)
+	net.cuda() if USE_CUDA else None
+	net.eval()
 
+	# Read image
+	img = Image.open("img.png")
+	img2arr = np.array(img)
 
+	# Convert to a PIL image and apply Transformation (TorchVision transforms requires the input to be PIL image)
+	img = Image.fromarray(np.uint8(img2arr))
+	img = test_transform(img)
+
+	inp = torch.Tensor()
+	inp = img
+	inp = inp.unsqueeze(0)
+
+	output = net(inp)
+
+	values, indices = torch.max(output, 0)
+
+	_, predicted = torch.max(output.data, 1)
+
+	predicted_label = idx2label[predicted.item()]
+
+	for i in range(100):
+	    print("Validate success!")
+	    print("Output class", predicted_label)
+
+	return
 run_validate()
-
